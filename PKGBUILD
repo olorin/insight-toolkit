@@ -22,10 +22,16 @@ optdepends=('python2: build python wrapping'
             'clang: for swig'
 	    'castxml-git: for ITK')
 makedepends=('cmake')
-source=("http://downloads.sourceforge.net/project/itk/itk/${pkgver:0:4}/InsightToolkit-${pkgver}.tar.xz")
-sha512sums=('5ab7b411f70c39a937baee03e75df18fdd53479691b7829c37637163314c26a01cf50628ce3c9503f952eb02c1746688719fdca525650f0747af184117680006')
+source=("http://downloads.sourceforge.net/project/itk/itk/${pkgver:0:4}/InsightToolkit-${pkgver}.tar.xz" "gcc8-support.patch")
+sha512sums=('5ab7b411f70c39a937baee03e75df18fdd53479691b7829c37637163314c26a01cf50628ce3c9503f952eb02c1746688719fdca525650f0747af184117680006'
+            '374125b0c8eb0bfb95b8253fd5f2a4065345256c37d3354131e288ecc204cf46f7930abce3b848cdbee7a1f604a7678bdf8ca98a6b08d6a7832e54af22b2d2e7')
 
 _usepython=false
+
+prepare() {
+  cd "$srcdir/InsightToolkit-$pkgver"
+  patch -p1 -i "$srcdir/gcc8-support.patch"
+}
 
 build() {
   cd "$srcdir"
